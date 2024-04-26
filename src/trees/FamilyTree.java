@@ -30,9 +30,9 @@ public class FamilyTree
         
         
         void addChild(TreeNode childNode)
-        {
-            // Add childNode to this node's children list. Also
-            // set childNode's parent to this node.
+        { 	
+            children.add(childNode);// Add childNode to this node's children list. Also
+            childNode.parent=this;// set childNode's parent to this node.
         }
         
         
@@ -41,20 +41,21 @@ public class FamilyTree
         TreeNode getNodeWithName(String targetName)
         {
             // Does this node have the target name?
-            if (?????)
+            if (getName()==targetName) {
                 return this;
-                    
+            }       
             // No, recurse. Check all children of this node.
             for (TreeNode child: children)
             {
-                // If child.getNodeWithName(targetName) returns a non-null node,
-                // then that's the node we're looking for. Return it.
+                TreeNode node= child.getNodeWithName(targetName);// If child.getNodeWithName(targetName) returns a non-null node,
+                if(node!=null){
+                	return node;// then that's the node we're looking for. Return it.
+                }
             }
-            
             // Not found anywhere.
             return null;
+            
         }
-        
         
         // Returns a list of ancestors of this TreeNode, starting with this node’s parent and
         // ending with the root. Order is from recent to ancient.
@@ -66,7 +67,11 @@ public class FamilyTree
             // the nodes of a tree is like traversing a linked list. If that isn’t clear,
             // draw a tree, mark any leaf node, and then mark its ancestors in order from
             // recent to ancient. Expect a question about this on the final exam.
-
+            TreeNode current=null;
+            while(current.parent!=null) {
+            	ancestors.add(current.parent);
+            	current=current.parent;
+            }
             return ancestors;
         }
         
@@ -126,8 +131,8 @@ public class FamilyTree
 	private void addLine(String line) throws TreeException
 	{
 		// Extract parent and array of children.
-		int colonIndex = ?? should be the index of the colon in line.
-		if (colonIndex < 0)
+		int colonIndex = line.indexOf(";");
+		if (colonIndex < 0) {
 			?? throw a TreeException with a useful message
 		String parent = ?? The substring of line that starts at char #0 and ends just before colonIndex. Check the API for 
 				           class java.util.String, method substring(), if you need guidance.
@@ -151,6 +156,7 @@ public class FamilyTree
 		
 		// Add child nodes to parentNode.
 		?? For each name in childrenArray, create a new node and add that node to parentNode.
+		}
 	}
 	
 	
